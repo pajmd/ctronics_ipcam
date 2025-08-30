@@ -77,7 +77,7 @@ To make sure everyhting is build correctly
 
 ffmpeg logging is redirected in the container's /var/log/ipcam_ffmpeg.log mounted to **appdata/IPcam/log**.
 
-## Playing the data mkv file
+## Playing the mkv files
 
 We can use either **VLC** or select a bunch of filed and paly them in windows **Media Player**
 
