@@ -4,7 +4,7 @@
 
 ## Docker on OMV
 
-### Builinding the image
+### Building the image
 
 I Created a dockerfile **ipcam-dockerfile** in Services > Compose > Dockerfiles.
 Along with the dockerfile definition I addeds save-rtsp-stream.sh in Script Filename. 
@@ -41,3 +41,10 @@ volumes:
 
 #### Environment variables
 In the section **Environment** of the **Compose** definition I added the definition of the variables that will be passed to the app.
+
+## Running the Service after modifying the Dockerfile od script
+
+* delete the container
+* delete the image
+* **UP** the service to rebuild the image, build the container and run it.
+* 
