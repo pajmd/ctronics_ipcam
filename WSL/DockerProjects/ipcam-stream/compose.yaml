@@ -1,0 +1,27 @@
+services:
+  ipcam-stream-capture:
+    # Allow to rebuild the image in case I modified the app
+    # docker compose up --build -d to build and run as deamon
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ipcam-stream-app
+    container_name: ipcam-stream-app-container
+    environment:
+      - USER_NAME=<cam user>
+      - USER_PWD=<cam password>
+    volumes:
+      # Next line means [dockerfile path]/.data, i.e. repo is located in the Dockerfile folder
+      # - ./data:/usr/src/app/repo
+      #  repo is mounted to a location defined by the laater Volumes directive
+      - ipcam-stream-capture-data:/usr/src/app/repo
+
+volumes:
+  # Create the voulume so thee is no need to execute docker volume create "vol name" beforehand.
+  #
+  # docker will decide where to create it and will prepend the current folder name to th path
+  #ipcam-stream-capture-data:
+  #
+  # I specify where I want the volume to mounted
+  ipcam-stream-capture-data:/tmp
+    external: true
