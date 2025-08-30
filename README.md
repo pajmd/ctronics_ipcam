@@ -73,7 +73,7 @@ To make sure everyhting is build correctly
 * **UP** the service to rebuild the image, build the container and run it.
   
 
-*** Logging
+### Logging
 
 ffmpeg logging is redirected in the container's /var/log/ipcam_ffmpeg.log mounted to **appdata/IPcam/log**.
 
