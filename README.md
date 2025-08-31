@@ -4,7 +4,7 @@ This project is about capturing the Ctronic IP Cam stream to save it on my NAS.
 
 Since my OMV has a Docker plugin I decided to use Docker and Compose to manage the app.
 
-The capturing is easily done using the **RSTP protocol** with **ffmpeg** see this [documentation](https://medium.com/@tom.humph/saving-rtsp-camera-streams-with-ffmpeg-baab7e80d767).
+The capturing is easily done using the **RTSP protocol** with **ffmpeg** see this [documentation](https://medium.com/@tom.humph/saving-rtsp-camera-streams-with-ffmpeg-baab7e80d767).
 
 ## Docker on WSL DESKTOP-BJO8LJ8
 
