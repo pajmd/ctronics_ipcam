@@ -1,3 +1,15 @@
+# Life cycle of an image / container
+#
+# Based on https://dev.to/ajeetraina/run-ffmpeg-within-a-docker-container-a-step-by-step-guide-c0l
+#
+#
+# Build docker image with a Dockerfile
+# sudo docker build -t ipcam-stream-app .
+#
+# sudo docker run ipcam-stream-app
+# List running containers
+# sudo docker images
+#
 # Create local host volume
 # sudo docker volume create ipcam-stream-data-host
 #
@@ -16,15 +28,37 @@
 # Stop running container
 # sudo docker stop ipcam
 #
+# To run a container from the image
+# ---------------------------------
+# Pull the ubuntu Docker image using the following command:
+# docker pull ubuntu:latest
+# docker run -it ubuntu
+#
+# To check the execution of the container's log
+# ---------------------------------------------
+# sudo docker logs ipcam-stream-app-container
 #
 # Docker file
 #
 # The image pulled will automatically be a variant based on the architecture
 FROM ubuntu:latest
 
+SHELL ["/bin/bash", "-c"]
 WORKDIR /usr/src/app
 RUN apt-get update && apt-get install -y ffmpeg
+RUN apt install -y python3.12-venv
+RUN python3 -m venv /usr/src/app
+RUN /usr/src/app/bin/pip3 install psutil
+
+RUN source /usr/src/app/bin/activate
 # Copy script in WORKDIR
-COPY ./save-rtsp-stream.sh .
+# COPY ./save-rtsp-stream.sh .
+COPY ./save-monitor-rtsp-stream.sh .
+#
+# To check the execution of the container's log
+# ---------------------------------------------
+# sudo docker logs ipcam-stream-app-container
 RUN mkdir repo
-CMD ["./save-rtsp-stream.sh"]
+RUN mkdir log
+# CMD ["./save-rtsp-stream.sh"]
+CMD ["/usr/src/app/bin/python3", "save-monitor-rtsp-stream.sh"]
