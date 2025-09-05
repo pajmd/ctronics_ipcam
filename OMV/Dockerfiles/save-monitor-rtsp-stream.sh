@@ -13,7 +13,7 @@ if not os.path.exists('repo'):
 user_name = os.environ.get('USER_NAME', 'default_user')
 user_pwd = os.environ.get('USER_PWD', 'default_password')
 
-fd_log = open('log/ipcam_ffmpeg.log', 'a')
+fd_log = open('/var/log/ipcam_ffmpeg.log', 'a')
 
 base_process = subprocess.Popen(
     ['ffmpeg', '-hide_banner', '-y', '-loglevel', '+repeat+level+error', '-rtsp_transport', 'tcp', '-use_wallclock_as_timestamps', '1', '-i', 
