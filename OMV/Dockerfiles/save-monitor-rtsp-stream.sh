@@ -16,7 +16,7 @@ user_pwd = os.environ.get('USER_PWD', 'default_password')
 fd_log = open('/var/log/ipcam_ffmpeg.log', 'a')
 
 base_process = subprocess.Popen(
-    ['ffmpeg', '-hide_banner', '-y', '-loglevel', '+repeat+level+error', '-rtsp_transport', 'tcp', '-use_wallclock_as_timestamps', '1', '-i', 
+    ['/usr/bin/ffmpeg', '-hide_banner', '-y', '-loglevel', '+repeat+level+error', '-rtsp_transport', 'tcp', '-use_wallclock_as_timestamps', '1', '-i', 
     f'rtsp://{user_name}:{user_pwd}@192.168.1.43:554/11', '-vcodec', 'copy', '-acodec', 'copy', '-f', 'segment', '-reset_timestamps', '1', 
     '-segment_time', '600', '-segment_format', 'mkv', '-segment_atclocktime', '1', '-strftime', '1', 'repo/%Y%m%dT%H%M%S.mkv']
     , stdout=fd_log, stderr=fd_log
@@ -29,7 +29,7 @@ attempts = 10
 
 while base_process.poll() is None:
     cpu_percent = control_process.cpu_percent()
-    print(f"ffmpeg cpu usage: {cpu_percent} {psutil.Process(base_process.pid).name}", file=sys.stderr)
+    # print(f"ffmpeg cpu usage: {cpu_percent} {psutil.Process(base_process.pid).name}", file=sys.stderr)
 
     if cpu_percent == 0.0:
         attempts -= 1
@@ -38,10 +38,12 @@ while base_process.poll() is None:
         attempts = 10
 
     if attempts == 0:
-        print("ffmpeg is hanging (CPU usage is 0%). Killing the process!", file=sys.stderr)
+        print(f"ffmpeg is hanging (CPU usage is 0%). First kill of the process {base_process.pid}!", file=sys.stderr)
         while base_process.poll() is None:
+            print(f"ffmpeg is hanging (CPU usage is 0%). Killing the process {base_process.pid}!", file=sys.stderr)
             base_process.terminate()
             time.sleep(1)
+        exit(1)
 
         break
     #Sleep is 1 second, so if ffmpeg is not using cpu for 5 seconds, kill the process
