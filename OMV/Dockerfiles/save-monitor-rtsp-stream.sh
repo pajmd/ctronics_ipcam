@@ -16,6 +16,7 @@ user_pwd = os.environ.get('USER_PWD', 'default_password')
 
 fd_log = open('/var/log/ipcam_ffmpeg.log', 'a')
 
+print(f"{datetime.datetime.today()}: starting ffmpeg", file=sys.stderr)
 base_process = subprocess.Popen(
     ['/usr/bin/ffmpeg', '-hide_banner', '-y', '-loglevel', '+repeat+level+error', '-rtsp_transport', 'tcp', '-use_wallclock_as_timestamps', '1', '-i', 
     f'rtsp://{user_name}:{user_pwd}@192.168.1.43:554/11', '-vcodec', 'copy', '-acodec', 'copy', '-f', 'segment', '-reset_timestamps', '1', 
