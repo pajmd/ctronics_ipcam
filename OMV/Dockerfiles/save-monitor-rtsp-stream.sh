@@ -34,7 +34,7 @@ while base_process.poll() is None:
 
     if cpu_percent == 0.0:
         attempts -= 1
-        print(f"ffmpeg is not active, counting down, attempt left: {attempts}", file=sys.stderr)
+        print(f"{datetime.datetime.today()}: ffmpeg is not active, counting down, attempt left: {attempts}", file=sys.stderr)
     else:
         attempts = 10
 
