@@ -3,6 +3,7 @@ import subprocess
 import psutil
 import time
 import os
+import datetime
 
 
 # Ensure the 'repo' directory exists
@@ -40,7 +41,7 @@ while base_process.poll() is None:
     if attempts == 0:
         print(f"ffmpeg is hanging (CPU usage is 0%). First kill of the process {base_process.pid}!", file=sys.stderr)
         while base_process.poll() is None:
-            print(f"ffmpeg is hanging (CPU usage is 0%). Killing the process {base_process.pid}!", file=sys.stderr)
+            print(f"{datetime.datetime.today()}: ffmpeg is hanging (CPU usage is 0%). Killing the process {base_process.pid}!", file=sys.stderr)
             base_process.terminate()
             time.sleep(1)
         exit(1)
